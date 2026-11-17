@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handset – Mobile Shop</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root { 
+    --ink:#14213d; 
+    --paper:#f6f7fb; 
+    --signal:#ff5a36; 
+    --mint:#1fb58f; 
+  }
+  body { 
+    background:var(--paper); 
+    color:var(--ink); 
+    font-family:"Segoe UI",system-ui,sans-serif; 
+    display:flex; 
+    flex-direction:column; 
+    min-height:100vh; 
+  }
+  main { 
+    flex:1; 
+  }
+  .navbar { 
+    background:var(--ink); 
+  }
+  .navbar .nav-link { 
+    color:#c9d1e6; 
+    font-weight:500; 
+  }
+  .navbar .nav-link.active, .navbar .nav-link:hover { 
+    color:#fff; 
+  }
+  .logo { 
+    display:flex; 
+    align-items:center; 
+    gap:.55rem; 
+    color:#fff; 
+    font-weight:700; 
+    font-size:1.3rem; 
+    text-decoration:none; 
+  }
+  .logo-mark { 
+    width:22px; 
+    height:34px; 
+    border:3px solid var(--signal); 
+    border-radius:6px; 
+    position:relative; 
+  }
+  .logo-mark::after { 
+    content:""; 
+    position:absolute; 
+    left:50%; 
+    bottom:3px; 
+    width:5px; 
+    height:5px; 
+    margin-left:-2.5px; 
+    border-radius:50%; 
+    background:var(--signal); 
+  }
+  .btn-signal { 
+    background:var(--signal); 
+    border-color:var(--signal); 
+    color:#fff; 
+    font-weight:600; 
+  }
+  .btn-signal:hover { 
+    background:#e84a28; 
+    border-color:#e84a28; 
+    color:#fff; 
+  }
+  .cart-badge { 
+    background:var(--signal); 
+  }
+  .hero { 
+    background:linear-gradient(120deg,var(--ink) 55%,#2a3d6e); 
+    color:#fff; 
+    border-radius:1.25rem; 
+    overflow:hidden; 
+  }
+  .hero h1 { 
+    font-weight:700; 
+    letter-spacing:-.02em; 
+  }
+  .hero-img { 
+    background:#fff; 
+    border-radius:1rem; 
+    padding:.5rem; 
+    max-height:340px; 
+    object-fit:contain; 
+    width:100%; 
+  }
+  .section-title { 
+    font-weight:700; 
+    letter-spacing:-.01em; 
+  }
+  .product-card { 
+    border:0; 
+    border-radius:1rem; 
+    box-shadow:0 2px 10px rgba(20,33,61,.08); 
+    overflow:hidden; 
+  }
+  .product-stage { 
+    background:#fff; 
+    aspect-ratio:1/1; 
+  }
+  .product-stage img { 
+    width:100%; 
+    height:100%; 
+    object-fit:contain; 
+  }
+  .sku { 
+    font-size:.75rem; 
+    color:#6b7490; 
+  }
+  .desc { 
+    font-size:.85rem; 
+    color:#555e78; 
+  }
+  .price { 
+    font-weight:700; 
+    font-size:1.15rem; 
+  }
+  .offer { 
+    border-radius:1rem; 
+    padding:1.5rem; 
+    color:#fff; 
+    height:100%; 
+  }
+  .view { 
+    display:none; 
+  } 
+  .view.active { 
+    display:block; 
+  }
+  .summary-row { 
+    border-bottom:1px solid #e3e6ef; 
+  }
+  .order-box { 
+    background:#fff; 
+    border-radius:1rem; 
+    box-shadow:0 2px 10px rgba(20,33,61,.08); 
+  }
+  .thumb { 
+    width:48px; 
+    height:48px; 
+    object-fit:contain; 
+    background:#fff; 
+    border-radius:.5rem; 
+  }
+  .form-control:focus,.form-select:focus { 
+    border-color:var(--signal); 
+    box-shadow:0 0 0 .2rem rgba(255,90,54,.2); 
+  }
+  a:focus-visible,button:focus-visible { 
+    outline:3px solid var(--signal); 
+    outline-offset:2px; 
+  }
+  footer { 
+    background:var(--ink); 
+    color:#c9d1e6; 
+  }
+  footer a { 
+    color:#c9d1e6; 
+    text-decoration:none; 
+  } 
+  footer a:hover { 
+    color:#fff; 
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark sticky-top">
+  <div class="container">
+    <a class="logo" href="#home"><span class="logo-mark"></span>Handset</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Toggle menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" data-link="home" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" data-link="shop" href="#shop">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" data-link="checkout" href="#checkout">Checkout <span id="cartCount" class="badge rounded-pill cart-badge">0</span></a></li>
+        <li class="nav-item"><a class="nav-link" data-link="order-summary" href="#order-summary">Order Summary</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+
+  <!-- HOME -->
+  <section id="view-home" class="view">
+    <div class="hero p-4 p-md-5 mb-5">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <h1 class="display-5">The latest phones, at honest prices.</h1>
+          <p class="lead text-white-50">Genuine, sealed handsets from Apple, Samsung and OPPO with a 1-year warranty and pay-on-delivery.</p>
+          <a href="#shop" class="btn btn-signal btn-lg">Shop all phones</a>
+        </div>
+        <div class="col-md-6"><img class="hero-img" src="images/natural.jpg" alt="iPhone 16 Pro in natural titanium"></div>
+      </div>
+    </div>
+
+    <h2 class="section-title mb-3">Featured phones</h2>
+    <div class="row g-3 mb-5" id="featuredGrid"></div>
+
+    <h2 class="section-title mb-3">Current offers</h2>
+    <div class="row g-3">
+      <div class="col-md-4"><div class="offer" style="background:var(--signal)"><h4>Free delivery</h4><p class="mb-0">On orders above Rs. 400,000. Otherwise a flat Rs. 300 delivery charge.</p></div></div>
+      <div class="col-md-4"><div class="offer" style="background:var(--ink)"><h4>Trade in your old phone</h4><p class="mb-0">Get credit towards your next handset in store.</p></div></div>
+      <div class="col-md-4"><div class="offer" style="background:var(--mint)"><h4>Easy installments</h4><p class="mb-0">Split the price into 3, 6 or 12 months.</p></div></div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="view-shop" class="view">
+    <h2 class="section-title mb-3">Shop</h2>
+    <div class="order-box p-3 mb-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-3">
+          <label class="form-label mb-1" for="showSel">Show</label>
+          <select id="showSel" class="form-select">
+            <option value="all">All Products</option>
+            <option value="featured">Featured</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label mb-1" for="sortSel">Sort by price</label>
+          <select id="sortSel" class="form-select">
+            <option value="default">Default order</option>
+            <option value="asc">Low to High</option>
+            <option value="desc">High to Low</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label mb-1" for="priceRange">Max price: <strong id="rangeLabel"></strong></label>
+          <input type="range" class="form-range" id="priceRange">
+        </div>
+      </div>
+    </div>
+    <p class="text-secondary" id="resultCount"></p>
+    <div class="row g-3" id="productGrid"></div>
+  </section>
+
+  <!-- CHECKOUT -->
+  <section id="view-checkout" class="view">
+    <h2 class="section-title mb-3">Checkout</h2>
+    <div id="emptyCart" class="order-box p-4 text-center d-none">
+      <p class="mb-3">Your cart is empty.</p>
+      <a href="#shop" class="btn btn-signal">Go to shop</a>
+    </div>
+    <div class="row g-4" id="checkoutBody">
+      <div class="col-lg-7">
+        <form id="checkoutForm" class="order-box p-4" novalidate>
+          <h5 class="mb-3">Customer details</h5>
+          <div class="mb-3"><label class="form-label" for="fName">Full name</label><input id="fName" class="form-control" required><div class="invalid-feedback">Enter your name.</div></div>
+          <div class="mb-3"><label class="form-label" for="fPhone">Phone number</label><input id="fPhone" type="tel" class="form-control" required pattern="[0-9+\s\-]{7,}"><div class="invalid-feedback">Enter a valid phone number.</div></div>
+          <div class="mb-3"><label class="form-label" for="fAddress">Delivery address</label><textarea id="fAddress" rows="3" class="form-control" required></textarea><div class="invalid-feedback">Enter your delivery address.</div></div>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6"><label class="form-label" for="fPostal">Postal code</label><input id="fPostal" class="form-control" required pattern="[A-Za-z0-9 \-]{3,10}"><div class="invalid-feedback">Enter a valid postal code.</div></div>
+            <div class="col-md-6"><label class="form-label" for="fCountry">Country</label>
+              <select id="fCountry" class="form-select"><option>Pakistan</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Canada</option><option>Saudi Arabia</option></select></div>
+          </div>
+          <div class="mb-4"><label class="form-label" for="fPay">Payment method</label>
+            <select id="fPay" class="form-select"><option>Cash on delivery</option><option>Credit / Debit card</option><option>Bank transfer</option><option>Easypaisa</option><option>JazzCash</option></select></div>
+          <button class="btn btn-signal btn-lg w-100" type="submit">Place Order</button>
+        </form>
+      </div>
+      <div class="col-lg-5">
+        <div class="order-box p-4">
+          <h5 class="mb-3">Your cart</h5>
+          <div id="cartList"></div>
+          <div class="d-flex justify-content-between mt-3"><span>Subtotal</span><span id="cartSub"></span></div>
+          <div class="d-flex justify-content-between mt-1"><span>Delivery</span><span id="cartDel"></span></div>
+          <p class="small text-secondary mb-0 mt-1" id="cartHint"></p>
+          <div class="d-flex justify-content-between mt-2 fs-5 fw-bold"><span>Total</span><span id="cartTotal"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER SUMMARY -->
+  <section id="view-order-summary" class="view">
+    <h2 class="section-title mb-3">Order Summary</h2>
+    <div id="orderEmpty" class="order-box p-4 text-center">
+      <p class="mb-3">No order yet. Place an order and it will show up here.</p>
+      <a href="#shop" class="btn btn-signal">Start shopping</a>
+    </div>
+    <div id="orderDetails" class="d-none"></div>
+  </section>
+</main>
+
+<footer class="mt-5 pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-5">
+        <a class="logo mb-2" href="#home"><span class="logo-mark"></span>Handset</a>
+        <p class="small mb-0">Your neighbourhood mobile shop for new, sealed phones with full warranty and fast delivery.</p>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6 class="text-white">Quick links</h6>
+        <ul class="list-unstyled small mb-0">
+          <li><a href="#home">Home</a></li><li><a href="#shop">Shop</a></li>
+          <li><a href="#checkout">Checkout</a></li><li><a href="#order-summary">Order Summary</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-4">
+        <h6 class="text-white">Contact</h6>
+        <ul class="list-unstyled small mb-0">
+          <li>Phase 1, Jamshoro</li>
+          <li>Phone: +00 123 456 7890</li>
+          <li>Email: handset.com</li>
+          <li>Open daily, 9 am – 11 pm</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-secondary mt-4">
+    <p class="small text-center mb-0">© 2026 Handset. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Add to cart popup -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="pmTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" id="pmTitle">Added to cart</h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center" id="pmBody"></div>
+      <div class="modal-footer border-0 pt-0 justify-content-center">
+        <button class="btn btn-outline-dark" data-bs-dismiss="modal">Keep shopping</button>
+        <a href="#checkout" class="btn btn-signal" data-bs-dismiss="modal">Go to checkout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order placed popup -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="omTitle" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4 text-center p-3">
+      <div class="modal-body">
+        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle" style="width:64px;height:64px;background:var(--mint);color:#fff;font-size:2rem">✓</div>
+        <h4 id="omTitle">Order placed</h4>
+        <p class="mb-1">Thank you, <strong id="omName"></strong>.</p>
+        <p class="text-secondary">Order <strong id="omId"></strong> is on its way to you.</p>
+        <button class="btn btn-signal" id="omView">View order summary</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const CURRENCY = "Rs. ";
+const PRODUCTS = [
+  { id:1, sku:"HS-OPP-001", name:"OPPO A-Series, Purple",     price:57000,  img:"images/2-2.jpg",        featured:false, desc:"Slim body with a faceted purple back, large display and all-day battery. A solid everyday phone." },
+  { id:2, sku:"HS-SAM-002", name:"Samsung Galaxy S, Mint",    price:249999,  img:"images/33.jpg",         featured:true,  desc:"Bright AMOLED screen, triple camera and a fast processor in a light, mint-colored body." },
+  { id:3, sku:"HS-APL-003", name:"iPhone 13, Midnight",       price:167999,  img:"images/iphone-13-1.jpg",featured:false, desc:"Dual-camera system, A15 chip and a crisp Super Retina display. Still a great value iPhone." },
+  { id:4, sku:"HS-APL-004", name:"iPhone 14, Starlight",      price:195999,  img:"images/iphone-14.jpg",  featured:true,  desc:"Improved main camera, crash detection and a bright OLED display in a clean starlight finish." },
+  { id:5, sku:"HS-APL-005", name:"iPhone Pro, Black Titanium",price:335999, img:"images/Black-1.jpg",    featured:true,  desc:"Titanium frame, triple pro camera system and Dynamic Island for the most demanding users." },
+  { id:6, sku:"HS-APL-006", name:"iPhone Pro, Natural Titanium",price:335999,img:"images/natural.jpg",   featured:false, desc:"The same pro-grade hardware in a warm natural titanium finish with a matte glass back." }
+];
+
+const $ = s => document.querySelector(s);
+const money = n => CURRENCY + n.toLocaleString();
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const findProduct = id => PRODUCTS.find(p => p.id === id);
+
+let cart = load("cart", []);
+let order = load("lastOrder", null);
+
+/* ---------- Products ---------- */
+function cardHTML(p) {
+  return `<div class="col-6 col-lg-4"><div class="card product-card h-100">
+    <div class="product-stage"><img src="${p.img}" alt="${p.name}"></div>
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title mb-0">${p.name}</h5>
+      <span class="sku mb-2">SKU: ${p.sku}</span>
+      <p class="desc">${p.desc}</p>
+      <div class="d-flex justify-content-between align-items-center mt-auto">
+        <span class="price">${money(p.price)}</span>
+        <button class="btn btn-signal btn-sm" data-add="${p.id}">Add to Cart</button>
+      </div>
+    </div></div></div>`;
+}
+
+const maxPrice = Math.max(...PRODUCTS.map(p => p.price));
+const range = $("#priceRange");
+const STEP = 5000, sliderMax = Math.ceil(maxPrice / STEP) * STEP;
+range.min = 0; range.max = sliderMax; range.step = STEP; range.value = sliderMax;
+
+function renderShop() {
+  const limit = +range.value, sort = $("#sortSel").value;
+  $("#rangeLabel").textContent = money(limit);
+  let list = PRODUCTS.filter(p => p.price <= limit && ($("#showSel").value === "all" || p.featured));
+  if (sort === "asc") list.sort((a, b) => a.price - b.price);
+  if (sort === "desc") list.sort((a, b) => b.price - a.price);
+  $("#resultCount").textContent = `${list.length} phone${list.length === 1 ? "" : "s"} found`;
+  $("#productGrid").innerHTML = list.length ? list.map(cardHTML).join("")
+    : `<div class="col-12"><div class="order-box p-4 text-center">No phones in this price range. Raise the max price.</div></div>`;
+}
+range.addEventListener("input", renderShop);
+$("#sortSel").addEventListener("change", renderShop);
+$("#showSel").addEventListener("change", renderShop);
+$("#featuredGrid").innerHTML = PRODUCTS.filter(p => p.featured).map(p => cardHTML(p).replace("col-6 col-lg-4", "col-6 col-md-4")).join("");
+
+/* ---------- Cart ---------- */
+const cartCount = () => cart.reduce((s, i) => s + i.qty, 0);
+const FREE_OVER = 400000, DELIVERY_FEE = 300;
+const cartSubtotal = () => cart.reduce((s, i) => s + i.qty * findProduct(i.id).price, 0);
+const deliveryFee = sub => (sub > FREE_OVER || sub === 0) ? 0 : DELIVERY_FEE;
+const cartTotal = () => cartSubtotal() + deliveryFee(cartSubtotal());
+
+function addToCart(id) {
+  const row = cart.find(i => i.id === id);
+  row ? row.qty++ : cart.push({ id, qty: 1 });
+  save("cart", cart); renderCart();
+  const p = findProduct(id), qty = cart.find(i => i.id === id).qty;
+  $("#pmBody").innerHTML = `
+    <img src="${p.img}" alt="${p.name}" style="width:160px;height:160px;object-fit:contain">
+    <h5 class="mt-2 mb-0">${p.name}</h5>
+    <p class="sku mb-1">SKU: ${p.sku}</p>
+    <p class="price mb-1">${money(p.price)}</p>
+    <p class="mb-0">${qty} in your cart · ${cartCount()} item${cartCount() > 1 ? "s" : ""} total</p>`;
+  bootstrap.Modal.getOrCreateInstance("#productModal").show();
+}
+
+function changeQty(id, d) {
+  const row = cart.find(i => i.id === id); if (!row) return;
+  row.qty += d;
+  if (row.qty <= 0) cart = cart.filter(i => i.id !== id);
+  save("cart", cart); renderCart();
+}
+
+function renderCart() {
+  $("#cartCount").textContent = cartCount();
+  $("#emptyCart").classList.toggle("d-none", cart.length > 0);
+  $("#checkoutBody").classList.toggle("d-none", cart.length === 0);
+  $("#cartList").innerHTML = cart.map(i => {
+    const p = findProduct(i.id);
+    return `<div class="summary-row d-flex align-items-center gap-2 py-2">
+      <img class="thumb" src="${p.img}" alt="">
+      <div class="flex-grow-1"><div class="fw-semibold small">${p.name}</div><small class="text-secondary">${money(p.price)} each</small></div>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Quantity for ${p.name}">
+        <button class="btn btn-outline-dark" data-qty="${p.id}" data-d="-1" aria-label="Decrease">−</button>
+        <span class="btn btn-light disabled">${i.qty}</span>
+        <button class="btn btn-outline-dark" data-qty="${p.id}" data-d="1" aria-label="Increase">+</button>
+      </div>
+      <div class="fw-bold text-end" style="min-width:64px">${money(p.price * i.qty)}</div>
+    </div>`;
+  }).join("");
+  const sub = cartSubtotal(), fee = deliveryFee(sub);
+  $("#cartSub").textContent = money(sub);
+  $("#cartDel").textContent = fee ? money(fee) : "Free";
+  $("#cartHint").textContent = !cart.length ? "" : fee
+    ? `Spend ${money(FREE_OVER - sub + 1)} more for free delivery (orders above ${money(FREE_OVER)}).`
+    : `Free delivery on orders above ${money(FREE_OVER)}.`;
+  $("#cartTotal").textContent = money(cartTotal());
+}
+
+/* ---------- Order ---------- */
+function renderOrder() {
+  $("#orderEmpty").classList.toggle("d-none", !!order);
+  const box = $("#orderDetails");
+  box.classList.toggle("d-none", !order);
+  if (!order) return;
+  box.innerHTML = `<div class="row g-4">
+    <div class="col-lg-5"><div class="order-box p-4 h-100">
+      <h5>Order ${esc(order.id)}</h5>
+      <p class="text-secondary small">${esc(order.date)}</p>
+      <dl class="mb-0">
+        <dt>Customer name</dt><dd>${esc(order.name)}</dd>
+        <dt>Phone</dt><dd>${esc(order.phone)}</dd>
+        <dt>Address</dt><dd>${esc(order.address)}</dd>
+        <dt>Postal code</dt><dd>${esc(order.postal || "-")}</dd>
+        <dt>Country</dt><dd>${esc(order.country || "-")}</dd>
+        <dt>Payment method</dt><dd class="mb-0">${esc(order.payment || "Cash on delivery")}</dd>
+      </dl>
+    </div></div>
+    <div class="col-lg-7"><div class="order-box p-4">
+      <h5 class="mb-3">Products</h5>
+      ${order.items.map(i => `<div class="summary-row d-flex align-items-center gap-3 py-2">
+        <img class="thumb" src="${i.img}" alt="">
+        <div class="flex-grow-1"><div class="fw-semibold">${esc(i.name)}</div><small class="text-secondary">SKU ${esc(i.sku)} · ${money(i.price)} × ${i.qty}</small></div>
+        <strong>${money(i.price * i.qty)}</strong></div>`).join("")}
+      <div class="d-flex justify-content-between mt-3"><span>Subtotal</span><span>${money(order.subtotal ?? order.total)}</span></div>
+      <div class="d-flex justify-content-between mt-1"><span>Delivery</span><span>${order.delivery ? money(order.delivery) : "Free"}</span></div>
+      <div class="d-flex justify-content-between mt-2 fs-5 fw-bold"><span>Total</span><span>${money(order.total)}</span></div>
+      <span class="badge text-bg-success mt-3">Order confirmed</span>
+    </div></div></div>`;
+}
+
+$("#checkoutForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const form = e.target;
+  if (!form.checkValidity() || !cart.length) { form.classList.add("was-validated"); return; }
+  order = {
+    id: "#HS" + Math.floor(100000 + Math.random() * 900000),
+    date: new Date().toLocaleString(),
+    name: $("#fName").value.trim(), phone: $("#fPhone").value.trim(), address: $("#fAddress").value.trim(),
+    postal: $("#fPostal").value.trim(), country: $("#fCountry").value, payment: $("#fPay").value,
+    items: cart.map(i => { const p = findProduct(i.id); return { name:p.name, sku:p.sku, img:p.img, price:p.price, qty:i.qty }; }),
+    subtotal: cartSubtotal(), delivery: deliveryFee(cartSubtotal()), total: cartTotal()
+  };
+  save("lastOrder", order);
+  cart = []; save("cart", cart);
+  form.reset(); form.classList.remove("was-validated");
+  renderCart(); renderOrder();
+  $("#omName").textContent = order.name;
+  $("#omId").textContent = order.id;
+  bootstrap.Modal.getOrCreateInstance("#orderModal").show();
+});
+
+$("#omView").addEventListener("click", () => {
+  bootstrap.Modal.getInstance("#orderModal").hide();
+  location.hash = "order-summary";
+});
+
+/* ---------- Events & routing ---------- */
+document.addEventListener("click", e => {
+  const add = e.target.closest("[data-add]"); if (add) addToCart(+add.dataset.add);
+  const q = e.target.closest("[data-qty]"); if (q) changeQty(+q.dataset.qty, +q.dataset.d);
+  if (e.target.closest(".nav-link")) bootstrap.Collapse.getInstance("#menu")?.hide();
+});
+
+function route() {
+  const page = location.hash.slice(1);
+  const name = ["home", "shop", "checkout", "order-summary"].includes(page) ? page : "home";
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + name));
+  document.querySelectorAll("[data-link]").forEach(a => a.classList.toggle("active", a.dataset.link === name));
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+
+renderShop(); renderCart(); renderOrder(); route();
+</script>
+</body>
+</html>
