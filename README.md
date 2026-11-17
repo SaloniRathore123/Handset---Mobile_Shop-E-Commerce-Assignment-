@@ -2,11 +2,11 @@
 
 A clean, single-page mobile/handset e-commerce storefront built with **HTML5, Bootstrap 5.3.3, jQuery and vanilla JavaScript**. Browse handsets, filter by price, add to cart, and place an order with cash-on-delivery — no backend or build step required. Just open `index.html` in a browser.
 
-## 📱 Live demo
+## Live demo
 
 Open `index.html` directly in any modern browser. The app is entirely client-side (cart and last order persist in `localStorage`).
 
-## 🚀 Features
+## Features
 
 - **Product catalog** — 6 handsets from Apple, Samsung and OPPO with SKUs, prices and descriptions
 - **Featured section** — highlighted phones on the home page
@@ -18,7 +18,7 @@ Open `index.html` directly in any modern browser. The app is entirely client-sid
 - **Responsive design** — Bootstrap grid, works on mobile and desktop
 - **Client-side persistence** — cart and last order saved via `localStorage`
 
-## 🛍️ Products
+## Products
 
 | # | Product | SKU | Price |
 |---|---------|-----|-------|
@@ -29,7 +29,7 @@ Open `index.html` directly in any modern browser. The app is entirely client-sid
 | 5 | iPhone Pro, Black Titanium (featured) | HS-APL-005 | Rs. 3,35,999 |
 | 6 | iPhone Pro, Natural Titanium | HS-APL-006 | Rs. 3,35,999 |
 
-## 🗂️ Project structure
+## Project structure
 
 ```
 Handset---Mobile_Shop-E-Commerce-Assignment-/
@@ -44,14 +44,14 @@ Handset---Mobile_Shop-E-Commerce-Assignment-/
 └── README.md
 ```
 
-## 🛠️ Tech stack
+## Tech stack
 
 - HTML5 / CSS3 (custom variables + Bootstrap 5.3.3)
 - JavaScript (ES6) + jQuery
 - Bootstrap Icons / Bootstrap components (navbar, cards, modals, forms, toasts)
 - `localStorage` for cart & last-order persistence
 
-## 📦 How to run
+## How to run
 
 1. Clone or download this repository.
 2. Open `index.html` in your browser.
@@ -59,12 +59,11 @@ Handset---Mobile_Shop-E-Commerce-Assignment-/
 
 No installation, npm, or server is needed.
 
-## 📄 License
+## License
 
 This project was created as a mobile-shop e-commerce assignment.
 
-## ✍️ Author
+## Author
 
 **Saloni Rathore** — SaloniRathore123  
 salonirathore164@gmail.com  
-https://github.com/SaloniRathore123
